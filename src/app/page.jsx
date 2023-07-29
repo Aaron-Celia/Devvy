@@ -28,7 +28,7 @@ export default function Home() {
     return (
 			<main className="h-fit w-screen flex flex-col items-center">
 				<Image
-					className="rounded-full mt-10 drop-shadow-2xl"
+					className="rounded-full mt-10"
 					src={profilePic}
 					alt="Profile Picture"
 					height={256}
