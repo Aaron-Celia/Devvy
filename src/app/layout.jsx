@@ -11,9 +11,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
 	return (
 		<html lang="en">
-			{/* <script
-				src="https://kit.fontawesome.com/6b83d06e00.js"
-				crossorigin="anonymous"></script> */}
+			<link rel='icon' sizes='96x96' type='image/png' href='/favicon.png' />
 			<body className={inter.className}>
 				<div id='box'>
 					{children}

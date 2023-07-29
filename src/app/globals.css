@@ -23,6 +23,11 @@ body {
   font-weight: bolder;
 }
 
+.header2 {
+  font-size: 32px;
+  font-weight: bolder;
+}
+
 .skill-box {
   background-color: #A8A196;
 }
