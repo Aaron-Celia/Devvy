@@ -69,7 +69,7 @@ export default function Home() {
 			"https://www.google.com/recaptcha/api/siteverify",
 			{
 				params: {
-					secret: process.env.RECAPTCHA_SECRET_KEY,
+					secret: process.env.NEXT_PUBLIC_RECAPTCHA_SECRET_KEY,
           response: captchaCode
 				}
 			}
@@ -436,7 +436,7 @@ export default function Home() {
 						variant="contained"
 						sx={{ marginBottom: "2.5rem" }}
 						endIcon={isLoading ? null : <SendIcon />}>
-						{isLoading ? <CircularProgress color="secondary" /> : "Send"}
+						{isLoading ? <CircularProgress color="primary" /> : "Send"}
 					</Button>
 				</form>
 				<h2 className="text-3xl font-bold mt-20">OR</h2>
