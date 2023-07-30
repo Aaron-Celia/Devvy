@@ -193,19 +193,28 @@ export default function Home() {
 					<BottomNavigationAction
 						sx={{ color: "white" }}
 						label="Home"
-						onClick={() => setPage("home")}
+						onClick={() => {
+              window.scrollTo(0, 0)
+              setPage("home")
+            }}
 						icon={<HomeIcon fontSize="large" />}
 					/>
 					<BottomNavigationAction
 						sx={{ color: "white" }}
 						label="My Work"
-						onClick={() => setPage("projects")}
+						onClick={() => {
+              window.scrollTo(0, 0);
+              setPage("projects")
+            }}
 						icon={<CodeIcon fontSize="large" />}
 					/>
 					<BottomNavigationAction
 						sx={{ color: "white" }}
 						label="Contact"
-						onClick={() => setPage("contact")}
+						onClick={() => {
+              window.scrollTo(0, 0);
+              setPage("contact")
+            }}
 						icon={<AlternateEmailIcon fontSize="large" />}
 					/>
 				</BottomNavigation>
@@ -344,19 +353,28 @@ export default function Home() {
 					<BottomNavigationAction
 						sx={{ color: "white" }}
 						label="Home"
-						onClick={() => setPage("home")}
+						onClick={() => {
+              window.scrollTo(0, 0);
+              setPage("home")
+            }}
 						icon={<HomeIcon fontSize="large" />}
 					/>
 					<BottomNavigationAction
 						sx={{ color: "white" }}
 						label="My Work"
-						onClick={() => setPage("projects")}
+						onClick={() => {
+              window.scrollTo(0, 0);
+              setPage("projects")
+            }}
 						icon={<CodeIcon fontSize="large" />}
 					/>
 					<BottomNavigationAction
 						sx={{ color: "white" }}
 						label="Contact"
-						onClick={() => setPage("contact")}
+						onClick={() => {
+              window.scrollTo(0, 0);
+              setPage("contact")
+            }}
 						icon={<AlternateEmailIcon fontSize="large" />}
 					/>
 				</BottomNavigation>
@@ -465,19 +483,28 @@ export default function Home() {
 					<BottomNavigationAction
 						sx={{ color: "white" }}
 						label="Home"
-						onClick={() => setPage("home")}
+						onClick={() => {
+              window.scrollTo(0, 0);
+              setPage("home")
+            }}
 						icon={<HomeIcon fontSize="large" />}
 					/>
 					<BottomNavigationAction
 						sx={{ color: "white" }}
 						label="My Work"
-						onClick={() => setPage("projects")}
+						onClick={() => {
+              window.scrollTo(0, 0);
+              setPage("projects")
+            }}
 						icon={<CodeIcon fontSize="large" />}
 					/>
 					<BottomNavigationAction
 						sx={{ color: "white" }}
 						label="Contact"
-						onClick={() => setPage("contact")}
+						onClick={() => {
+              window.scrollTo(0, 0);
+              setPage("contact")
+            }}
 						icon={<AlternateEmailIcon fontSize="large" />}
 					/>
 				</BottomNavigation>
