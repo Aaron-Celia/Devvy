@@ -11,11 +11,10 @@ export const metadata = {
 export default function RootLayout({ children }) {
 	return (
 		<html lang="en">
-			<link rel='icon' sizes='96x96' type='image/png' href='/favicon.png' />
+			<link rel="icon" sizes="96x96" type="image/png" href="/favicon.png" />
 			<body className={inter.className}>
-				<div id='box'>
-					{children}
-				</div>
+				<div id="box">{children}</div>
+				<script src="https://smtpjs.com/v3/smtp.js"></script>
 			</body>
 		</html>
 	);

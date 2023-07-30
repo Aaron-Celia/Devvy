@@ -3,13 +3,24 @@ import Image from "next/image";
 import profilePic from "../../public/profile-pic.JPG";
 import { Lobster } from "next/font/google";
 import { Roboto_Mono } from "next/font/google";
-import { BottomNavigation, BottomNavigationAction, useMediaQuery } from "@mui/material";
+import {
+	BottomNavigation,
+	BottomNavigationAction,
+	Button,
+	TextField,
+	useMediaQuery
+} from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
 import CodeIcon from "@mui/icons-material/Code";
 import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
-import { useState } from "react";
+import { createRef, useState } from "react";
 import Link from "next/link";
 import GitHubIcon from "@mui/icons-material/GitHub";
+import SendIcon from "@mui/icons-material/Send";
+import LILogo from "../../public/linkedInLogo.png";
+import GHLogo from "../../public/githubLogo.png";
+import axios from "axios";
+import ReCAPTCHA from "react-google-recaptcha";
 
 const robotoMono = Roboto_Mono({
 	subsets: ["latin"],
@@ -22,10 +33,78 @@ const lobster = Lobster({
 });
 
 export default function Home() {
-  const [page, setPage] = useState('home')
+	const [page, setPage] = useState("home");
+	const [email, setEmail] = useState("");
+	const [subject, setSubject] = useState("");
+	const [message, setMessage] = useState("");
+	const [messageSuccess, setMessageSuccess] = useState(false);
+	const [error, setError] = useState("");
+	const [copied, setCopied] = useState(false);
 	const onPhone = useMediaQuery("(max-width: 700px)");
-  if(page === 'home'){
-    return (
+
+  const recaptchaRef = createRef();
+
+  const handleSubmit = (e) => {
+  event.preventDefault();
+  // Execute the reCAPTCHA when the form is submitted
+  recaptchaRef.current.execute();
+};
+
+	const onReCAPTCHAChange = async (captchaCode) => {
+		if(!captchaCode){
+      setError("Unprocessable content.");
+      setTimeout(() => {
+        setError('')
+      }, 2500);
+      return;
+    }
+    const verify = await axios.post(
+			"https://www.google.com/recaptcha/api/siteverify",
+			{
+				params: {
+					secret: process.env.RECAPTCHA_SECRET_KEY,
+          response: captchaCode
+				}
+			}
+		);
+    console.log(verify)
+    if(!verify.data.success){
+      setError("Unprocessable content.");
+			setTimeout(() => {
+				setError("");
+			}, 2500);
+			return;
+    }
+		try {
+			const res = await axios.post("/api/message", {
+				email: email,
+				subject: subject || "null",
+				message: message
+			});
+			if (res.data.message == "accepted") {
+        console.log('THIS RAN')
+				setEmail("");
+				setSubject("");
+				setMessage("");
+				setMessageSuccess(true);
+				setTimeout(() => {
+					setMessageSuccess(false);
+				}, 2000);
+			} else {
+				setError("Error sending message.");
+				setTimeout(() => {
+					setError("");
+				}, 2500);
+			}
+		} catch (e) {
+			setError("Error sending message.");
+			setTimeout(() => {
+				setError("");
+			}, 2500);
+		}
+	};
+	if (page === "home") {
+		return (
 			<main className="h-fit w-screen flex flex-col items-center">
 				<Image
 					className="rounded-full mt-10"
@@ -40,19 +119,27 @@ export default function Home() {
 				<h4 className={`${robotoMono.className} text-xl`}>Software Engineer</h4>
 				<br />
 				<br />
+				<div className="flex w-screen justify-around">
+					<Link href="https://www.linkedin.com/in/aaron-celia/" target="_blank">
+						<Image src={LILogo} alt="LinkedIn Logo" height={64} width={64} />
+					</Link>
+					<Link href="https://github.com/Aaron-Celia" target="_blank">
+						<Image src={GHLogo} alt="GitHub Logo" height={64} width={64} />
+					</Link>
+				</div>
 				<br />
 				<br />
 				<h2 className="header underline">About Me</h2>
 				<p
-					className={`${onPhone ? "mx-10" : "mx-20"} mt-5 text-center text-xl`}>
-					Highly skilled and motivated Marine Corps veteran turned Software
-					Engineer, proficient in a wide array of technologies including
-					TypeScript, JavaScript, Python, Node.js, Express.js, React, Redux,
-					SQL, and more. A dedicated problem-solver having a growth mindset and
-					a passion for innovation with a track record of delivering robust and
-					scalable solutions. Eager to leverage my diverse background and
-					technical expertise to drive impactful and transformative projects as
-					part of a dynamic software development team.
+					className={`${onPhone ? "mx-10" : "mx-60"} mt-5 text-center text-xl`}>
+					Highly skilled and motivated Marine Corps veteran turned freelance
+					Software Engineer, proficient in a wide array of technologies
+					including TypeScript, JavaScript, Python, Node.js, Express.js, React,
+					Redux, SQL, and more. A dedicated problem-solver having a growth
+					mindset and a passion for innovation with a track record of delivering
+					robust and scalable solutions. Eager to leverage my technical
+					expertise to drive impactful and transformative projects as a
+					freelance developer.
 				</p>
 				<h2 className="header underline mt-10 mb-5">Skills</h2>
 				<div className="flex flex-wrap justify-center">
@@ -87,8 +174,15 @@ export default function Home() {
 				<h2 className="header underline mt-10 mb-5">Education</h2>
 				<div className="flex flex-col items-center mb-60">
 					<h2 className="font-bold text-2xl">Fullstack Academy</h2>
-					<h4 className="font-semibold text-xl">Software Engineering Certificate</h4>
-					<Link className="text-blue-500 underline text-lg" href="https://docs.google.com/document/d/1SmvxRmpF2b6mUAEiWWlVBdOeRfErRUVaXwEewc92ptw/edit?usp=sharing" target="_blank">Recommendation Letter</Link>
+					<h4 className="font-semibold text-xl">
+						Software Engineering Certificate
+					</h4>
+					<Link
+						className="text-blue-500 underline text-lg"
+						href="https://docs.google.com/document/d/1SmvxRmpF2b6mUAEiWWlVBdOeRfErRUVaXwEewc92ptw/edit?usp=sharing"
+						target="_blank">
+						Recommendation Letter
+					</Link>
 				</div>
 				<BottomNavigation
 					showLabels
@@ -121,9 +215,9 @@ export default function Home() {
 				</BottomNavigation>
 			</main>
 		);
-  }
-  if(page === 'projects'){
-    return (
+	}
+	if (page === "projects") {
+		return (
 			<main className="h-fit w-screen flex flex-col items-center">
 				<h1 className={`${lobster.className} text-5xl my-10`}>Projects</h1>
 				<h2 className="header2 underline mt-20">Weather App</h2>
@@ -273,12 +367,84 @@ export default function Home() {
 				</BottomNavigation>
 			</main>
 		);
-  }
-  if (page === 'contact'){
-    return (
+	}
+	if (page === "contact") {
+		return (
 			<main className="h-fit w-screen flex flex-col items-center">
-				<h1 className={`${lobster.className} text-5xl my-10`}>Contact Me</h1>
-				<form className=""></form>
+				{messageSuccess && (
+					<div className="fixed top-0 w-screen bg-green-700 text-white flex items-center justify-center h-10">
+						Successfully sent message
+					</div>
+				)}
+				{error && (
+					<div className="fixed top-0 w-screen bg-red-700 text-white flex items-center justify-center h-10">
+						{error}
+					</div>
+				)}
+				<h1 className={`${lobster.className} text-5xl mt-20`}>Contact Me</h1>
+				<form
+					onSubmit={(e) => handleSubmit(e)}
+					className="w-[60vw] flex flex-col mt-20">
+					<TextField
+						id="outlined-basic"
+						label="Your Email"
+						required
+						variant="outlined"
+						value={email}
+						onChange={(e) => setEmail(e.target.value)}
+						className="mb-5"
+					/>
+					<TextField
+						className="mb-5"
+						id="outlined-basic"
+						value={subject}
+						onChange={(e) => setSubject(e.target.value)}
+						label="Subject"
+						variant="outlined"
+					/>
+					<TextField
+						id="outlined-multiline-static"
+						label="Message"
+						required
+						value={message}
+						onChange={(e) => setMessage(e.target.value)}
+						multiline
+						rows={7}
+						className="mb-5"
+					/>
+					<ReCAPTCHA
+						ref={recaptchaRef}
+						size="checkbox"
+						sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
+						onChange={onReCAPTCHAChange}
+					/>
+					<Button
+						type="submit"
+						variant="contained"
+						className="bg-blue-600"
+						endIcon={<SendIcon />}>
+						Send
+					</Button>
+				</form>
+				<h2 className="text-3xl font-bold mt-20">OR</h2>
+				<h2 className="text-xl font-bold mt-20 mb-5">
+					Aaron.r.celia@gmail.com
+				</h2>
+				<Button
+					onClick={() => {
+						window.navigator.clipboard.writeText("aaron.r.celia@gmail.com");
+						setCopied(true);
+						setTimeout(() => {
+							setCopied(false);
+						}, 1500);
+					}}
+					className={`${
+						copied
+							? "bg-green-600 hover:bg-green-500"
+							: "bg-blue-600 hover:bg-blue500"
+					} hover:bg-blue-500 text-white w-60 duration-150 mb-60`}>
+					{copied ? "Copied!" : "Copy Email Address"}
+				</Button>
 				<BottomNavigation
 					showLabels
 					sx={{
@@ -310,5 +476,5 @@ export default function Home() {
 				</BottomNavigation>
 			</main>
 		);
-  }
+	}
 }
