@@ -1,11 +1,13 @@
-require("dotenv").config();
-const accountSid = process.env.ACCOUNT_SID;
-const authToken = process.env.AUTH_TOKEN;
+import { config } from 'dotenv';
+config();
 const messSid = process.env.MESSAGING_SID;
 const twillioNumber = process.env.TWILLIO_NUMBER
-const client = require("twilio")(accountSid, authToken);
+const client = require("twilio")(
+	process.env.ACCOUNT_SID,
+	process.env.AUTH_TOKEN
+);
 const recipient = process.env.RECIPIENT;
-import { NextResponse, NextRequest } from "next/server";
+import { NextResponse } from "next/server";
 
 
 export async function POST (request, response) {
