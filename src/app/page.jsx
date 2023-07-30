@@ -65,24 +65,6 @@ export default function Home() {
       setIsLoading(false)
       return;
     }
-    const verify = await axios.post(
-			"https://www.google.com/recaptcha/api/siteverify",
-			{
-				params: {
-					secret: process.env.NEXT_PUBLIC_RECAPTCHA_SECRET_KEY,
-          response: captchaCode
-				}
-			}
-		);
-    if(!verify.data.success){
-      setError("Unprocessable content.");
-			setTimeout(() => {
-				setError("");
-			}, 2500);
-      recaptchaRef.current.reset();
-      setIsLoading(false);
-			return;
-    }
 		try {
 			const res = await axios.post("/api/message", {
 				email: email,
@@ -436,7 +418,7 @@ export default function Home() {
 						variant="contained"
 						sx={{ marginBottom: "2.5rem" }}
 						endIcon={isLoading ? null : <SendIcon />}>
-						{isLoading ? <CircularProgress color="primary" /> : "Send"}
+						{isLoading ? <CircularProgress color="info" /> : "Send"}
 					</Button>
 				</form>
 				<h2 className="text-3xl font-bold mt-20">OR</h2>
