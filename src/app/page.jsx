@@ -100,6 +100,7 @@ export default function Home() {
 		}
 	};
 	if (page === "home") {
+    window.scrollTo(0, 0);
 		return (
 			<main className="h-fit w-screen flex flex-col items-center">
 				<Image
@@ -222,6 +223,7 @@ export default function Home() {
 		);
 	}
 	if (page === "projects") {
+    window.scrollTo(0, 0);
 		return (
 			<main className="h-fit w-screen flex flex-col items-center">
 				<h1 className={`${lobster.className} text-5xl my-10`}>Projects</h1>
@@ -382,6 +384,7 @@ export default function Home() {
 		);
 	}
 	if (page === "contact") {
+    window.scrollTo(0, 0);
 		return (
 			<main className="h-fit w-screen flex flex-col items-center">
 				{messageSuccess && (
