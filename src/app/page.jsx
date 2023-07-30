@@ -7,6 +7,7 @@ import {
 	BottomNavigation,
 	BottomNavigationAction,
 	Button,
+	CircularProgress,
 	TextField,
 	useMediaQuery
 } from "@mui/material";
@@ -40,12 +41,16 @@ export default function Home() {
 	const [messageSuccess, setMessageSuccess] = useState(false);
 	const [error, setError] = useState("");
 	const [copied, setCopied] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+
 	const onPhone = useMediaQuery("(max-width: 700px)");
 
   const recaptchaRef = createRef();
 
   const handleSubmit = (e) => {
-  event.preventDefault();
+  e.preventDefault();
+  setIsLoading(true)
   // Execute the reCAPTCHA when the form is submitted
   recaptchaRef.current.execute();
 };
@@ -57,6 +62,7 @@ export default function Home() {
         setError('')
       }, 2500);
       recaptchaRef.current.reset();
+      setIsLoading(false)
       return;
     }
     const verify = await axios.post(
@@ -74,6 +80,7 @@ export default function Home() {
 				setError("");
 			}, 2500);
       recaptchaRef.current.reset();
+      setIsLoading(false);
 			return;
     }
 		try {
@@ -88,12 +95,14 @@ export default function Home() {
 				setSubject("");
 				setMessage("");
 				setMessageSuccess(true);
+        setIsLoading(false);
 				setTimeout(() => {
 					setMessageSuccess(false);
 				}, 2000);
         recaptchaRef.current.reset();
 			} else {
 				setError("Error sending message.");
+        setIsLoading(false);
 				setTimeout(() => {
 					setError("");
 				}, 2500);
@@ -101,6 +110,7 @@ export default function Home() {
 			}
 		} catch (e) {
 			setError("Error sending message.");
+      setIsLoading(false);
 			setTimeout(() => {
 				setError("");
 			}, 2500);
@@ -395,10 +405,10 @@ export default function Home() {
 						variant="outlined"
 						value={email}
 						onChange={(e) => setEmail(e.target.value)}
-						className="mb-5"
+						sx={{ marginBottom: "2rem" }}
 					/>
 					<TextField
-						className="mb-5"
+						sx={{ marginBottom: "2rem" }}
 						id="outlined-basic"
 						value={subject}
 						onChange={(e) => setSubject(e.target.value)}
@@ -413,7 +423,7 @@ export default function Home() {
 						onChange={(e) => setMessage(e.target.value)}
 						multiline
 						rows={7}
-						className="mb-5"
+						sx={{ marginBottom: "2rem" }}
 					/>
 					<ReCAPTCHA
 						ref={recaptchaRef}
@@ -424,9 +434,9 @@ export default function Home() {
 					<Button
 						type="submit"
 						variant="contained"
-						className="bg-blue-600"
+						sx={{ marginBottom: "8rem" }}
 						endIcon={<SendIcon />}>
-						Send
+						{isLoading ? <CircularProgress color='secondary' />: 'Send'}
 					</Button>
 				</form>
 				<h2 className="text-3xl font-bold mt-20">OR</h2>
@@ -441,11 +451,22 @@ export default function Home() {
 							setCopied(false);
 						}, 1500);
 					}}
-					className={`${
+					sx={
 						copied
-							? "bg-green-600 hover:bg-green-500"
-							: "bg-blue-600 hover:bg-blue500"
-					} hover:bg-blue-500 text-white w-60 duration-150 mb-60`}>
+							? {
+									backgroundColor: "dark-green",
+									color: "white",
+									width: "15rem",
+									height: "3rem",
+                  marginBottom: '15rem'
+							  }
+							: {
+									backgroundColor: "dark-blue",
+									color: "white",
+									width: "15rem",
+									height: "3rem"
+							  }
+					}>
 					{copied ? "Copied!" : "Copy Email Address"}
 				</Button>
 				<BottomNavigation
