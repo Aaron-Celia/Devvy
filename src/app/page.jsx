@@ -434,7 +434,7 @@ export default function Home() {
 					<Button
 						type="submit"
 						variant="contained"
-						sx={{ marginBottom: "4rem" }}
+						sx={{ marginBottom: "2.5rem" }}
 						endIcon={isLoading ? null : <SendIcon />}>
 						{isLoading ? <CircularProgress color="secondary" /> : "Send"}
 					</Button>
