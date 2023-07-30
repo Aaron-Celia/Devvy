@@ -434,9 +434,9 @@ export default function Home() {
 					<Button
 						type="submit"
 						variant="contained"
-						sx={{ marginBottom: "8rem" }}
-						endIcon={<SendIcon />}>
-						{isLoading ? <CircularProgress color='secondary' />: 'Send'}
+						sx={{ marginBottom: "4rem" }}
+						endIcon={isLoading ? null : <SendIcon />}>
+						{isLoading ? <CircularProgress color="secondary" /> : "Send"}
 					</Button>
 				</form>
 				<h2 className="text-3xl font-bold mt-20">OR</h2>
@@ -454,17 +454,18 @@ export default function Home() {
 					sx={
 						copied
 							? {
-									backgroundColor: "dark-green",
+									backgroundColor: "#54B435",
 									color: "white",
 									width: "15rem",
 									height: "3rem",
-                  marginBottom: '15rem'
+									marginBottom: "15rem"
 							  }
 							: {
-									backgroundColor: "dark-blue",
+									backgroundColor: "#4E4FEB",
 									color: "white",
 									width: "15rem",
-									height: "3rem"
+									height: "3rem",
+									marginBottom: "15rem"
 							  }
 					}>
 					{copied ? "Copied!" : "Copy Email Address"}
