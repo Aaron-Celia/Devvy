@@ -56,6 +56,7 @@ export default function Home() {
       setTimeout(() => {
         setError('')
       }, 2500);
+      recaptchaRef.current.reset();
       return;
     }
     const verify = await axios.post(
@@ -67,12 +68,12 @@ export default function Home() {
 				}
 			}
 		);
-    console.log(verify)
     if(!verify.data.success){
       setError("Unprocessable content.");
 			setTimeout(() => {
 				setError("");
 			}, 2500);
+      recaptchaRef.current.reset();
 			return;
     }
 		try {
@@ -90,17 +91,20 @@ export default function Home() {
 				setTimeout(() => {
 					setMessageSuccess(false);
 				}, 2000);
+        recaptchaRef.current.reset();
 			} else {
 				setError("Error sending message.");
 				setTimeout(() => {
 					setError("");
 				}, 2500);
+        recaptchaRef.current.reset();
 			}
 		} catch (e) {
 			setError("Error sending message.");
 			setTimeout(() => {
 				setError("");
 			}, 2500);
+      recaptchaRef.current.reset();
 		}
 	};
 	if (page === "home") {
@@ -413,7 +417,7 @@ export default function Home() {
 					/>
 					<ReCAPTCHA
 						ref={recaptchaRef}
-						size="compact"
+						size="invisible"
 						sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
 						onChange={onReCAPTCHAChange}
 					/>
