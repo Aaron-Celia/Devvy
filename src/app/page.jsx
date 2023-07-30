@@ -14,7 +14,7 @@ import {
 import HomeIcon from "@mui/icons-material/Home";
 import CodeIcon from "@mui/icons-material/Code";
 import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
-import { createRef, useState } from "react";
+import { createRef, useEffect, useState } from "react";
 import Link from "next/link";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import SendIcon from "@mui/icons-material/Send";
@@ -43,10 +43,13 @@ export default function Home() {
 	const [copied, setCopied] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-
 	const onPhone = useMediaQuery("(max-width: 700px)");
 
   const recaptchaRef = createRef();
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [page])
 
   const handleSubmit = (e) => {
   e.preventDefault();
@@ -100,7 +103,6 @@ export default function Home() {
 		}
 	};
 	if (page === "home") {
-    window.scrollTo(0, 0);
 		return (
 			<main className="h-fit w-screen flex flex-col items-center">
 				<Image
@@ -194,28 +196,19 @@ export default function Home() {
 					<BottomNavigationAction
 						sx={{ color: "white" }}
 						label="Home"
-						onClick={() => {
-              window.scrollTo(0, 0)
-              setPage("home")
-            }}
+						onClick={() => setPage("home")}
 						icon={<HomeIcon fontSize="large" />}
 					/>
 					<BottomNavigationAction
 						sx={{ color: "white" }}
 						label="My Work"
-						onClick={() => {
-              window.scrollTo(0, 0);
-              setPage("projects")
-            }}
+						onClick={() => setPage("projects")}
 						icon={<CodeIcon fontSize="large" />}
 					/>
 					<BottomNavigationAction
 						sx={{ color: "white" }}
 						label="Contact"
-						onClick={() => {
-              window.scrollTo(0, 0);
-              setPage("contact")
-            }}
+						onClick={() => setPage("contact")}
 						icon={<AlternateEmailIcon fontSize="large" />}
 					/>
 				</BottomNavigation>
@@ -223,7 +216,6 @@ export default function Home() {
 		);
 	}
 	if (page === "projects") {
-    window.scrollTo(0, 0);
 		return (
 			<main className="h-fit w-screen flex flex-col items-center">
 				<h1 className={`${lobster.className} text-5xl my-10`}>Projects</h1>
@@ -355,28 +347,19 @@ export default function Home() {
 					<BottomNavigationAction
 						sx={{ color: "white" }}
 						label="Home"
-						onClick={() => {
-              window.scrollTo(0, 0);
-              setPage("home")
-            }}
+						onClick={() => setPage("home")}
 						icon={<HomeIcon fontSize="large" />}
 					/>
 					<BottomNavigationAction
 						sx={{ color: "white" }}
 						label="My Work"
-						onClick={() => {
-              window.scrollTo(0, 0);
-              setPage("projects")
-            }}
+						onClick={() => setPage("projects")}
 						icon={<CodeIcon fontSize="large" />}
 					/>
 					<BottomNavigationAction
 						sx={{ color: "white" }}
 						label="Contact"
-						onClick={() => {
-              window.scrollTo(0, 0);
-              setPage("contact")
-            }}
+						onClick={() => setPage("contact")}
 						icon={<AlternateEmailIcon fontSize="large" />}
 					/>
 				</BottomNavigation>
@@ -384,7 +367,6 @@ export default function Home() {
 		);
 	}
 	if (page === "contact") {
-    window.scrollTo(0, 0);
 		return (
 			<main className="h-fit w-screen flex flex-col items-center">
 				{messageSuccess && (
@@ -486,28 +468,19 @@ export default function Home() {
 					<BottomNavigationAction
 						sx={{ color: "white" }}
 						label="Home"
-						onClick={() => {
-              window.scrollTo(0, 0);
-              setPage("home")
-            }}
+						onClick={() => setPage("home")}
 						icon={<HomeIcon fontSize="large" />}
 					/>
 					<BottomNavigationAction
 						sx={{ color: "white" }}
 						label="My Work"
-						onClick={() => {
-              window.scrollTo(0, 0);
-              setPage("projects")
-            }}
+						onClick={() => setPage("projects")}
 						icon={<CodeIcon fontSize="large" />}
 					/>
 					<BottomNavigationAction
 						sx={{ color: "white" }}
 						label="Contact"
-						onClick={() => {
-              window.scrollTo(0, 0);
-              setPage("contact")
-            }}
+						onClick={() => setPage("contact")}
 						icon={<AlternateEmailIcon fontSize="large" />}
 					/>
 				</BottomNavigation>
