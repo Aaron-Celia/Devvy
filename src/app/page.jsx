@@ -341,7 +341,6 @@ export default function Home() {
 					sx={{
 						backgroundColor: "#000000",
 						width: onPhone ? "70vw" : "40vw",
-						// marginLeft: onPhone ? "15vw" : "30vw",
 						position: "fixed",
 						bottom: "5vw",
 						borderRadius: "10cqi"
@@ -414,7 +413,7 @@ export default function Home() {
 					/>
 					<ReCAPTCHA
 						ref={recaptchaRef}
-						size="checkbox"
+						size="compact"
 						sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
 						onChange={onReCAPTCHAChange}
 					/>
