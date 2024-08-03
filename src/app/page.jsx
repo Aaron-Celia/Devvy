@@ -22,6 +22,7 @@ import LILogo from "../../public/linkedInLogo.png";
 import GHLogo from "../../public/githubLogo.png";
 import axios from "axios";
 import ReCAPTCHA from "react-google-recaptcha";
+import { motion } from "framer-motion";
 
 const robotoMono = Roboto_Mono({
 	subsets: ["latin"],
@@ -41,33 +42,35 @@ export default function Home() {
 	const [messageSuccess, setMessageSuccess] = useState(false);
 	const [error, setError] = useState("");
 	const [copied, setCopied] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+	const [progress, setProgress] = useState(0);
+	const [isLoading, setIsLoading] = useState(false);
 
 	const onPhone = useMediaQuery("(max-width: 700px)");
 
-  const recaptchaRef = createRef();
-
-  useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [page])
-
-  const handleSubmit = (e) => {
-  e.preventDefault();
-  setIsLoading(true)
-  // Execute the reCAPTCHA when the form is submitted
-  recaptchaRef.current.execute();
-};
+	
+	useEffect(() => {
+		window.scrollTo(0, 0);
+	}, [page]);
+	
+	const recaptchaRef = createRef();
+	
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		setIsLoading(true);
+		// Execute the reCAPTCHA when the form is submitted
+		recaptchaRef.current.execute();
+	};
 
 	const onReCAPTCHAChange = async (captchaCode) => {
-		if(!captchaCode){
-      setError("Unprocessable content.");
-      setTimeout(() => {
-        setError('')
-      }, 2500);
-      recaptchaRef.current.reset();
-      setIsLoading(false)
-      return;
-    }
+		if (!captchaCode) {
+			setError("Unprocessable content.");
+			setTimeout(() => {
+				setError("");
+			}, 2500);
+			recaptchaRef.current.reset();
+			setIsLoading(false);
+			return;
+		}
 		try {
 			const res = await axios.post("/api/message", {
 				email: email,
@@ -75,31 +78,31 @@ export default function Home() {
 				message: message
 			});
 			if (res.data.message == "accepted") {
-        console.log('THIS RAN')
+				console.log("THIS RAN");
 				setEmail("");
 				setSubject("");
 				setMessage("");
 				setMessageSuccess(true);
-        setIsLoading(false);
+				setIsLoading(false);
 				setTimeout(() => {
 					setMessageSuccess(false);
 				}, 2000);
-        recaptchaRef.current.reset();
+				recaptchaRef.current.reset();
 			} else {
 				setError("Error sending message.");
-        setIsLoading(false);
+				setIsLoading(false);
 				setTimeout(() => {
 					setError("");
 				}, 2500);
-        recaptchaRef.current.reset();
+				recaptchaRef.current.reset();
 			}
 		} catch (e) {
 			setError("Error sending message.");
-      setIsLoading(false);
+			setIsLoading(false);
 			setTimeout(() => {
 				setError("");
 			}, 2500);
-      recaptchaRef.current.reset();
+			recaptchaRef.current.reset();
 		}
 	};
 	if (page === "home") {
