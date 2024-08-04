@@ -425,7 +425,7 @@ export default function Home() {
 				<h1 className={`${lobster.className} text-5xl mt-20`}>
 					Contact Me
 				</h1>
-				<form
+				{/* <form
 					onSubmit={(e) => handleSubmit(e)}
 					className='w-[60vw] flex flex-col mt-20'>
 					<TextField
@@ -469,7 +469,7 @@ export default function Home() {
 						{isLoading ? <CircularProgress color='info' /> : 'Send'}
 					</Button>
 				</form>
-				<h2 className='text-3xl font-bold mt-20'>OR</h2>
+				<h2 className='text-3xl font-bold mt-20'>OR</h2> */}
 				<h2 className='text-xl font-bold mt-20 mb-5'>
 					aaron.r.celia@outlook.com
 				</h2>
