@@ -277,20 +277,20 @@ export default function Home() {
 						</li>
 					</ul>
 				</div>
-				<div className='flex mb-10'>
 					<Link
 						href='https://github.com/Aaron-Celia/weather-app'
 						target='_blank'
 						className='bg-black hover:bg-slate-800 duration-150 rounded-xl h-10 w-40 text-white flex items-center justify-center font-bold mx-5'>
 						View Code on <GitHubIcon sx={{ marginLeft: '0.5em' }} />
 					</Link>
-					<Link
+				{/* <div className='flex mb-10'> */}
+					{/* <Link
 						href='https://nextweatherapp-a399e9163fb6.herokuapp.com/'
 						target='_blank'
 						className='bg-blue-600 hover:bg-blue-500 duration-150 rounded-xl h-10 w-40 text-white flex items-center justify-center font-bold mx-5'>
 						View Site
-					</Link>
-				</div>
+					</Link> */}
+				{/* </div> */}
 				<h2 className='header2 underline mt-20'>Live Messaging App</h2>
 				<div
 					className={`${
